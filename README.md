@@ -270,8 +270,3 @@ curl -X POST http://localhost:8000/api/benchmark/run \
 
 ---
 
-## 📖 Docs
-
-- [Architecture & ASR choice reasoning](docs/architecture.md)
-- [Full ASR evaluation report](docs/asr_evaluation.md)
-- [Cost analysis](docs/cost_analysis.md)

@@ -1,0 +1,60 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+*.whl
+.Python
+env/
+venv/
+.venv/
+ENV/
+.env
+*.env
+
+# === Node / Frontend ===
+node_modules/
+dist/
+dist-ssr/
+*.local
+.cache/
+
+# === Secrets (NEVER commit these) ===
+.env
+.env.local
+.env.production
+.env.*.local
+backend/.env
+frontend/.env.local
+
+# === IDE ===
+.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+logs/
+npm-debug.log*
+
+# === Whisper model cache (large files) ===
+*.bin
+*.pt
+model_cache/
+faster_whisper_cache/
+
+# === Test artifacts ===
+.pytest_cache/
+htmlcov/
+.coverage

@@ -1,0 +1,695 @@
+{
+  "voice_notes": [
+    {
+      "id": "VN-01",
+      "language": "te",
+      "specialty": "Cardiology",
+      "doctor_id": "DR-VENKAT-01",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Ramaiah gari ki molli noppi undi, I be proven adugutunnaru, stent valla ivvaledu, parasitamol continue cheyandi, trauma doll try cheddham, dizziness monitor cheyali",
+      "ground_truth_transcript": "Ramaiah gari ki molli noppi undi, Ibuprofen adugutunnaru, stent valla ivvaledu, Paracetamol continue cheyandi, Tramadol try cheddham, dizziness monitor cheyali",
+      "plain_english": "Patient Ramaiah has knee pain, requesting Ibuprofen, but due to stent DO NOT GIVE Ibuprofen, continue Paracetamol, try Tramadol, monitor for dizziness",
+      "expected_nodes": [
+        {
+          "type": "CONSTRAINT",
+          "title": "DO NOT give Ibuprofen — cardiac stent contraindication",
+          "importance": 1.0,
+          "negation_trigger": "ivvaledu"
+        },
+        {
+          "type": "DECISION",
+          "title": "Continue Paracetamol for knee pain",
+          "importance": 0.8
+        },
+        {
+          "type": "DECISION",
+          "title": "Initiate Tramadol — trial for pain management",
+          "importance": 0.8
+        },
+        {
+          "type": "FACT",
+          "title": "Patient on cardiac stent — NSAIDs contraindicated",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Monitor for dizziness with Tramadol",
+          "importance": 0.7
+        }
+      ],
+      "chatgpt_raw_simulation": "Patient Ramaiah has nappy rash. Try trauma doll. Parasitamol continue. Dizziness monitor.",
+      "chatgpt_nodes_simulation": [
+        {"type": "FACT", "title": "Patient has nappy rash", "importance": 0.5},
+        {"type": "DECISION", "title": "Try trauma doll", "importance": 0.6}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Flipped critical negation: 'ivvaledu Ibuprofen' (DO NOT give) became 'try Ibuprofen' — cardiac stent patient receiving NSAID could cause stent thrombosis"
+    },
+    {
+      "id": "VN-02",
+      "language": "hi",
+      "specialty": "Endocrinology",
+      "doctor_id": "DR-SHARMA-02",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Is patient ko met for men mat do, kidney function compromised hai, I be proven bhi nahi dena, glucose monitor karo din mein do baar, insuline glare jean start karo",
+      "ground_truth_transcript": "Is patient ko Metformin mat do, kidney function compromised hai, Ibuprofen bhi nahi dena, glucose monitor karo din mein do baar, Insulin Glargine start karo",
+      "plain_english": "Do NOT give Metformin to this patient, kidney function compromised, do NOT give Ibuprofen either, monitor glucose twice daily, start Insulin Glargine",
+      "expected_nodes": [
+        {
+          "type": "CONSTRAINT",
+          "title": "DO NOT give Metformin — renal impairment",
+          "importance": 1.0,
+          "negation_trigger": "mat do"
+        },
+        {
+          "type": "CONSTRAINT",
+          "title": "DO NOT give Ibuprofen — renal compromise",
+          "importance": 1.0,
+          "negation_trigger": "nahi dena"
+        },
+        {
+          "type": "FACT",
+          "title": "Compromised kidney function — CKD risk",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Start Insulin Glargine for glycaemic control",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Monitor blood glucose twice daily",
+          "importance": 0.8
+        }
+      ],
+      "chatgpt_raw_simulation": "Metformin for patient. Ibuprofen also to be given. Kidney function check. Glucose monitor twice. Insuline start.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Give Metformin", "importance": 0.7},
+        {"type": "DECISION", "title": "Give Ibuprofen also", "importance": 0.6}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Both negations flipped — Metformin in CKD causes fatal lactic acidosis. Ibuprofen in CKD causes acute kidney injury."
+    },
+    {
+      "id": "VN-03",
+      "language": "ta",
+      "specialty": "Orthopedics",
+      "doctor_id": "DR-MURUGAN-03",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Rajan patient ku I be proven kudadhu, knee replacement surgery scheduled, preg able in start pannunga, moonu tablet TDS, physio referral pannu",
+      "ground_truth_transcript": "Rajan patient ku Ibuprofen kudadhu, knee replacement surgery scheduled, Pregabalin start pannunga, moonu tablet TDS, physio referral pannu",
+      "plain_english": "For patient Rajan, DO NOT give Ibuprofen (kudadhu), knee replacement surgery scheduled, start Pregabalin 3 tablets TDS, physiotherapy referral",
+      "expected_nodes": [
+        {
+          "type": "CONSTRAINT",
+          "title": "DO NOT give Ibuprofen — pre-surgical contraindication",
+          "importance": 1.0,
+          "negation_trigger": "kudadhu"
+        },
+        {
+          "type": "DECISION",
+          "title": "Knee replacement surgery scheduled",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Start Pregabalin 3 tablets TDS for neuropathic pain",
+          "importance": 0.85
+        },
+        {
+          "type": "DECISION",
+          "title": "Physiotherapy referral for knee",
+          "importance": 0.7
+        }
+      ],
+      "chatgpt_raw_simulation": "Ibuprofen for Rajan. Surgery scheduled. Preg able in start. Physio.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Give Ibuprofen", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "NSAIDs pre-surgery increase bleeding risk. 'Preg able in' not recognised as Pregabalin — critical pain management missed."
+    },
+    {
+      "id": "VN-04",
+      "language": "kn",
+      "specialty": "Neurology",
+      "doctor_id": "DR-GIRISH-04",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Seizure patient ge carba maz a pine kodabaradu, alli son pram already ide, leva tirace a tam 500mg add maadi, ECG thorudu, driving beda",
+      "ground_truth_transcript": "Seizure patient ge Carbamazepine kodabaradu, Clonazepam already ide, Levetiracetam 500mg add maadi, ECG thorudu, driving beda",
+      "plain_english": "For seizure patient, DO NOT GIVE Carbamazepine (drug interaction), Clonazepam already given, add Levetiracetam 500mg, check ECG, do not drive",
+      "expected_nodes": [
+        {
+          "type": "CONSTRAINT",
+          "title": "DO NOT give Carbamazepine — drug interaction with Clonazepam",
+          "importance": 1.0,
+          "negation_trigger": "kodabaradu"
+        },
+        {
+          "type": "FACT",
+          "title": "Patient on Clonazepam for seizure management",
+          "importance": 0.8
+        },
+        {
+          "type": "DECISION",
+          "title": "Add Levetiracetam 500mg to regimen",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Order ECG",
+          "importance": 0.8
+        },
+        {
+          "type": "CONSTRAINT",
+          "title": "Patient must not drive — seizure disorder",
+          "importance": 0.95
+        }
+      ],
+      "chatgpt_raw_simulation": "Carbamazepine for seizure. Clonazepam. Leva tirace add 500mg. ECG.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Carbamazepine for seizure", "importance": 0.8}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Carbamazepine induces Clonazepam metabolism — concurrent use lowers Clonazepam levels, triggers seizure breakthrough."
+    },
+    {
+      "id": "VN-05",
+      "language": "ml",
+      "specialty": "Cardiology",
+      "doctor_id": "DR-ANAND-05",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Beta blocker paadilla patient iku, asthma history undu, riva rocks a ban start cheyyu, HbA1c check, ek tablet BD, blood pressure monitor cheyyu",
+      "ground_truth_transcript": "Beta blocker paadilla patient iku, asthma history undu, Rivaroxaban start cheyyu, HbA1c check, ek tablet BD, blood pressure monitor cheyyu",
+      "plain_english": "Beta blocker MUST NOT be given to this patient, asthma history, start Rivaroxaban 1 tablet BD, check HbA1c, monitor blood pressure",
+      "expected_nodes": [
+        {
+          "type": "CONSTRAINT",
+          "title": "DO NOT give Beta-blockers — asthma contraindication",
+          "importance": 1.0,
+          "negation_trigger": "paadilla"
+        },
+        {
+          "type": "FACT",
+          "title": "Patient has asthma history",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Start Rivaroxaban 1 tablet BD for anticoagulation",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Check HbA1c — diabetes monitoring",
+          "importance": 0.75
+        },
+        {
+          "type": "DECISION",
+          "title": "Monitor blood pressure",
+          "importance": 0.7
+        }
+      ],
+      "chatgpt_raw_simulation": "Beta blocker for patient. Asthma. Rivaroxaban start. HbA1c.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Start beta blocker", "importance": 0.8}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Beta-blocker in asthma patient causes fatal bronchospasm. Negation 'paadilla' missed entirely."
+    },
+    {
+      "id": "VN-06",
+      "language": "mr",
+      "specialty": "General",
+      "doctor_id": "DR-PATIL-06",
+      "has_negation": true,
+      "danger_level": "MODERATE",
+      "raw_asr_simulation": "Warfarin deu naka, surgery nanter, a picks a ban start kara, PT INR check, calcium carbon ate deu, vit d three add kara",
+      "ground_truth_transcript": "Warfarin deu naka, surgery nantar, Apixaban start kara, PT-INR check, Calcium Carbonate deu, Vitamin D3 add kara",
+      "plain_english": "Do NOT give Warfarin after surgery, start Apixaban, check PT-INR, give Calcium Carbonate, add Vitamin D3",
+      "expected_nodes": [
+        {
+          "type": "CONSTRAINT",
+          "title": "Discontinue Warfarin — post-surgical transition",
+          "importance": 0.95,
+          "negation_trigger": "deu naka"
+        },
+        {
+          "type": "DECISION",
+          "title": "Start Apixaban post-surgery anticoagulation",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Check PT-INR for anticoagulation monitoring",
+          "importance": 0.85
+        },
+        {
+          "type": "DECISION",
+          "title": "Add Calcium Carbonate and Vitamin D3 supplementation",
+          "importance": 0.65
+        }
+      ],
+      "chatgpt_raw_simulation": "Warfarin for patient. Apixaban. PT-INR check. Calcium give.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Give Warfarin", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Warfarin + Apixaban combination causes severe bleeding — the transition instruction was inverted."
+    },
+    {
+      "id": "VN-07",
+      "language": "bn",
+      "specialty": "Endocrinology",
+      "doctor_id": "DR-BOSE-07",
+      "has_negation": false,
+      "danger_level": "SAFE",
+      "raw_asr_simulation": "HbA1c 9.2 ache, met for men 500mg do baar korben, dapper flow zin add korben, three months er por test repeat korben, foot care shikhaun",
+      "ground_truth_transcript": "HbA1c 9.2 ache, Metformin 500mg do baar korben, Dapagliflozin add korben, three months er por test repeat korben, foot care shikhaun",
+      "plain_english": "HbA1c 9.2, give Metformin 500mg twice daily, add Dapagliflozin, repeat test in 3 months, teach foot care",
+      "expected_nodes": [
+        {
+          "type": "FACT",
+          "title": "HbA1c 9.2 — poor glycaemic control",
+          "importance": 0.85
+        },
+        {
+          "type": "DECISION",
+          "title": "Metformin 500mg BD for diabetes management",
+          "importance": 0.85
+        },
+        {
+          "type": "DECISION",
+          "title": "Add Dapagliflozin for additional glycaemic control",
+          "importance": 0.85
+        },
+        {
+          "type": "DECISION",
+          "title": "Repeat HbA1c in 3 months",
+          "importance": 0.7
+        },
+        {
+          "type": "DECISION",
+          "title": "Diabetic foot care education",
+          "importance": 0.65
+        }
+      ],
+      "chatgpt_raw_simulation": "HbA1c 9.2. Metformin 500mg twice. Dapper flow zin add. Test repeat. Foot care.",
+      "chatgpt_nodes_simulation": [
+        {"type": "FACT", "title": "HbA1c 9.2", "importance": 0.8},
+        {"type": "DECISION", "title": "Metformin 500mg BD", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": false,
+      "why_dangerous": "Drug name 'Dapagliflozin' not recognised from 'dapper flow zin' — missed SGLT2 inhibitor decision"
+    },
+    {
+      "id": "VN-08",
+      "language": "gu",
+      "specialty": "Gastroenterology",
+      "doctor_id": "DR-PATEL-08",
+      "has_negation": true,
+      "danger_level": "MODERATE",
+      "raw_asr_simulation": "NSAIDs na aapo, peptic ulcer history che, pan toe pra zol start karo, omeprazole na levo, omega prazoal joie nahi, endoscopy refer karo",
+      "ground_truth_transcript": "NSAIDs na aapo, peptic ulcer history che, Pantoprazole start karo, Omeprazole na levo, endoscopy refer karo",
+      "plain_english": "DO NOT give NSAIDs (peptic ulcer history), start Pantoprazole, do NOT take Omeprazole (switching), refer for endoscopy",
+      "expected_nodes": [
+        {
+          "type": "CONSTRAINT",
+          "title": "DO NOT give NSAIDs — peptic ulcer history",
+          "importance": 1.0,
+          "negation_trigger": "na aapo"
+        },
+        {
+          "type": "FACT",
+          "title": "Peptic ulcer history — NSAID contraindication",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Start Pantoprazole for gastroprotection",
+          "importance": 0.85
+        },
+        {
+          "type": "DECISION",
+          "title": "Refer for upper GI endoscopy",
+          "importance": 0.85
+        }
+      ],
+      "chatgpt_raw_simulation": "NSAIDs for patient. Pantoprazole. Omeprazole too. Endoscopy.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "NSAIDs and Pantoprazole", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "NSAIDs in peptic ulcer — GI bleed risk. Negation 'na aapo' completely missed."
+    },
+    {
+      "id": "VN-09",
+      "language": "te",
+      "specialty": "Pulmonology",
+      "doctor_id": "DR-KRISHNA-09",
+      "has_negation": false,
+      "danger_level": "SAFE",
+      "raw_asr_simulation": "COPD patient, sal bew ta mole inhaler rendu puffs BD, bew dez oh nide inhaler continue, mono tile last add cheyyi, spirometry next visit lo cheyyi, smoking band cheyyi",
+      "ground_truth_transcript": "COPD patient, Salbutamol inhaler rendu puffs BD, Budesonide inhaler continue, Montelukast add cheyyi, spirometry next visit lo cheyyi, smoking band cheyyi",
+      "plain_english": "COPD patient — Salbutamol inhaler 2 puffs BD, continue Budesonide inhaler, add Montelukast, spirometry next visit, stop smoking",
+      "expected_nodes": [
+        {
+          "type": "FACT",
+          "title": "COPD diagnosis",
+          "importance": 0.8
+        },
+        {
+          "type": "DECISION",
+          "title": "Salbutamol inhaler 2 puffs BD — bronchodilation",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Continue Budesonide inhaler — ICS maintenance",
+          "importance": 0.85
+        },
+        {
+          "type": "DECISION",
+          "title": "Add Montelukast for additional airway control",
+          "importance": 0.75
+        },
+        {
+          "type": "DECISION",
+          "title": "Spirometry scheduled at next visit",
+          "importance": 0.7
+        },
+        {
+          "type": "CONSTRAINT",
+          "title": "Smoking cessation mandatory for COPD management",
+          "importance": 0.9
+        }
+      ],
+      "chatgpt_raw_simulation": "COPD. Sally bew ta mol inhaler. Bew deso inhaler. Mono tele last. Spirometry.",
+      "chatgpt_nodes_simulation": [
+        {"type": "FACT", "title": "COPD patient", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": false,
+      "why_dangerous": "Drug names garbled — Salbutamol, Budesonide, Montelukast all unrecognised"
+    },
+    {
+      "id": "VN-10",
+      "language": "hi",
+      "specialty": "Psychiatry",
+      "doctor_id": "DR-GUPTA-10",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Lithium band karo, kidney function kharab hai, ser tra lean continue, kwee tie a peen mat do, sedation bahut zyada hai, mirtazapine try karein",
+      "ground_truth_transcript": "Lithium band karo, kidney function kharab hai, Sertraline continue, Quetiapine mat do, sedation bahut zyada hai, Mirtazapine try karein",
+      "plain_english": "Stop Lithium (kidney function poor), continue Sertraline, DO NOT give Quetiapine (excessive sedation), try Mirtazapine",
+      "expected_nodes": [
+        {
+          "type": "DECISION",
+          "title": "Discontinue Lithium — renal toxicity",
+          "importance": 0.95,
+          "negation_trigger": "band karo"
+        },
+        {
+          "type": "FACT",
+          "title": "Renal function compromised — Lithium contraindicated",
+          "importance": 0.9
+        },
+        {
+          "type": "DECISION",
+          "title": "Continue Sertraline — maintain antidepressant",
+          "importance": 0.8
+        },
+        {
+          "type": "CONSTRAINT",
+          "title": "DO NOT give Quetiapine — excessive sedation",
+          "importance": 0.9,
+          "negation_trigger": "mat do"
+        },
+        {
+          "type": "DECISION",
+          "title": "Trial Mirtazapine as alternative antidepressant",
+          "importance": 0.8
+        }
+      ],
+      "chatgpt_raw_simulation": "Lithium for patient. Ser tra lean. Kwee tie a peen. Mirtazapine.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Give Lithium", "importance": 0.8}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Lithium in renal failure causes lithium toxicity (fatal). Quetiapine negation missed."
+    },
+    {
+      "id": "VN-11",
+      "language": "te",
+      "specialty": "Cardiology",
+      "doctor_id": "DR-VENKAT-01",
+      "has_negation": false,
+      "danger_level": "SAFE",
+      "raw_asr_simulation": "Heart failure patient, tell me sartan 40mg OD, low star tan add cheyyi, b n p check cheyyi, echo schedule cheyyi, low salt diet follow cheyyi, fluid restrict 1.5 litre per day",
+      "ground_truth_transcript": "Heart failure patient, Telmisartan 40mg OD, Losartan add cheyyi, BNP check cheyyi, ECHO schedule cheyyi, low salt diet follow cheyyi, fluid restrict 1.5 litre per day",
+      "plain_english": "Heart failure patient — Telmisartan 40mg OD, add Losartan, check BNP, schedule ECHO, low salt diet, fluid restriction 1.5L/day",
+      "expected_nodes": [
+        {"type": "FACT", "title": "Heart failure diagnosis", "importance": 0.85},
+        {"type": "DECISION", "title": "Telmisartan 40mg OD for heart failure", "importance": 0.9},
+        {"type": "DECISION", "title": "Add Losartan for additional BP/heart failure control", "importance": 0.8},
+        {"type": "DECISION", "title": "Check BNP — heart failure marker", "importance": 0.85},
+        {"type": "DECISION", "title": "Echocardiogram scheduled", "importance": 0.85},
+        {"type": "DECISION", "title": "Fluid restriction 1.5L/day — heart failure management", "importance": 0.8}
+      ],
+      "chatgpt_raw_simulation": "Heart failure. Tell me sartan. Low star tan. BNP check. Echo.",
+      "chatgpt_nodes_simulation": [
+        {"type": "FACT", "title": "Heart failure", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": false,
+      "why_dangerous": "Drug names 'tell me sartan' and 'low star tan' not recognised as Telmisartan and Losartan"
+    },
+    {
+      "id": "VN-12",
+      "language": "ta",
+      "specialty": "Endocrinology",
+      "doctor_id": "DR-NATARAJAN-12",
+      "has_negation": true,
+      "danger_level": "MODERATE",
+      "raw_asr_simulation": "Thyroid patient, levo thy rocks seen 50 mcg OD, calcium carb kudadhu same time la, rendu mani neram gap vidu, TSH three months ku check pannu",
+      "ground_truth_transcript": "Thyroid patient, Levothyroxine 50 mcg OD, Calcium Carbonate kudadhu same time la, rendu mani neram gap vidu, TSH three months ku check pannu",
+      "plain_english": "Thyroid patient — Levothyroxine 50 mcg OD, DO NOT take Calcium Carbonate at same time (2 hours gap), check TSH in 3 months",
+      "expected_nodes": [
+        {"type": "FACT", "title": "Hypothyroidism — on Levothyroxine", "importance": 0.8},
+        {"type": "DECISION", "title": "Levothyroxine 50 mcg OD for hypothyroidism", "importance": 0.9},
+        {"type": "CONSTRAINT", "title": "DO NOT take Calcium Carbonate with Levothyroxine — absorption interference", "importance": 0.95, "negation_trigger": "kudadhu"},
+        {"type": "DECISION", "title": "2-hour gap between Levothyroxine and Calcium", "importance": 0.85},
+        {"type": "DECISION", "title": "TSH check in 3 months for dose titration", "importance": 0.75}
+      ],
+      "chatgpt_raw_simulation": "Thyroid. Levothyroxine 50 mcg. Calcium take same time. TSH check.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Levothyroxine and Calcium together", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Calcium reduces Levothyroxine absorption by 40% — thyroid control lost if taken simultaneously"
+    },
+    {
+      "id": "VN-13",
+      "language": "hi",
+      "specialty": "Rheumatology",
+      "doctor_id": "DR-MEHTA-13",
+      "has_negation": true,
+      "danger_level": "MODERATE",
+      "raw_asr_simulation": "Rheumatoid arthritis hai, metro tracks eight 15mg weekly, folic acid saath dena, NSAIDs nahi dena, hydroxychloroquine add karo, LFT monthly check karo",
+      "ground_truth_transcript": "Rheumatoid arthritis hai, Methotrexate 15mg weekly, Folic Acid saath dena, NSAIDs nahi dena, Hydroxychloroquine add karo, LFT monthly check karo",
+      "plain_english": "Rheumatoid arthritis — Methotrexate 15mg weekly with Folic Acid, DO NOT give NSAIDs, add Hydroxychloroquine, monthly LFT",
+      "expected_nodes": [
+        {"type": "FACT", "title": "Rheumatoid arthritis — DMARD therapy", "importance": 0.85},
+        {"type": "DECISION", "title": "Methotrexate 15mg weekly for RA", "importance": 0.9},
+        {"type": "DECISION", "title": "Folic Acid with Methotrexate — reduce side effects", "importance": 0.85},
+        {"type": "CONSTRAINT", "title": "DO NOT give NSAIDs — Methotrexate interaction", "importance": 0.9, "negation_trigger": "nahi dena"},
+        {"type": "DECISION", "title": "Add Hydroxychloroquine — combination DMARD", "importance": 0.85},
+        {"type": "DECISION", "title": "Monthly LFT monitoring for Methotrexate toxicity", "importance": 0.9}
+      ],
+      "chatgpt_raw_simulation": "RA. Metro tracks. Folic acid. NSAIDs too. Hydroxychloroquine. LFT.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Methotrexate and NSAIDs for RA", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "NSAIDs + Methotrexate = Methotrexate toxicity (bone marrow suppression, nephrotoxicity)"
+    },
+    {
+      "id": "VN-14",
+      "language": "kn",
+      "specialty": "Nephrology",
+      "doctor_id": "DR-SURESH-14",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "CKD stage 3 patient, eGFR 35, met for men beda, dapper flow zin beda, RAAS inhibitor start maadi, enalapril 5mg OD, protein restriction, RFT weekly check",
+      "ground_truth_transcript": "CKD stage 3 patient, eGFR 35, Metformin beda, Dapagliflozin beda, RAAS inhibitor start maadi, Enalapril 5mg OD, protein restriction, RFT weekly check",
+      "plain_english": "CKD stage 3, eGFR 35, DO NOT give Metformin, DO NOT give Dapagliflozin, start RAAS inhibitor Enalapril 5mg OD, protein restriction, weekly RFT",
+      "expected_nodes": [
+        {"type": "FACT", "title": "CKD Stage 3, eGFR 35", "importance": 0.9},
+        {"type": "CONSTRAINT", "title": "DO NOT give Metformin — CKD eGFR <45 contraindication", "importance": 1.0, "negation_trigger": "beda"},
+        {"type": "CONSTRAINT", "title": "DO NOT give Dapagliflozin — CKD eGFR <45", "importance": 1.0, "negation_trigger": "beda"},
+        {"type": "DECISION", "title": "Start Enalapril 5mg OD — RAAS inhibitor for CKD", "importance": 0.9},
+        {"type": "DECISION", "title": "Protein restriction diet for CKD", "importance": 0.8},
+        {"type": "DECISION", "title": "Weekly RFT monitoring for CKD progression", "importance": 0.85}
+      ],
+      "chatgpt_raw_simulation": "CKD. Metformin. Dapagliflozin. Enalapril. RFT.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Metformin and Dapagliflozin for CKD", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Both Metformin (lactic acidosis) and Dapagliflozin (euglycaemic DKA) contraindicated in CKD — both negations missed"
+    },
+    {
+      "id": "VN-15",
+      "language": "te",
+      "specialty": "Obstetrics",
+      "doctor_id": "DR-PADMA-15",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Pregnancy lo I be proven ivvakudadu, folic acid continue cheyyi, iron sucrose add cheyyi, met for men aapandi, gestational diabetes treat cheyyi, insulin start cheyyi",
+      "ground_truth_transcript": "Pregnancy lo Ibuprofen ivvakudadu, Folic Acid continue cheyyi, Iron Sucrose add cheyyi, Metformin aapandi, gestational diabetes treat cheyyi, Insulin start cheyyi",
+      "plain_english": "In pregnancy DO NOT give Ibuprofen, continue Folic Acid, add Iron Sucrose, STOP Metformin (pregnancy), treat gestational diabetes, start Insulin",
+      "expected_nodes": [
+        {"type": "CONSTRAINT", "title": "DO NOT give Ibuprofen in pregnancy — teratogenic", "importance": 1.0, "negation_trigger": "ivvakudadu"},
+        {"type": "CONSTRAINT", "title": "STOP Metformin — pregnancy", "importance": 0.95, "negation_trigger": "aapandi"},
+        {"type": "DECISION", "title": "Continue Folic Acid supplementation in pregnancy", "importance": 0.9},
+        {"type": "DECISION", "title": "Add Iron Sucrose for gestational anaemia", "importance": 0.85},
+        {"type": "DECISION", "title": "Start Insulin for gestational diabetes", "importance": 0.95},
+        {"type": "FACT", "title": "Gestational diabetes — insulin-dependent management", "importance": 0.85}
+      ],
+      "chatgpt_raw_simulation": "Pregnancy. Ibuprofen. Folic acid. Iron. Metformin. Insulin.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Give Ibuprofen and Metformin in pregnancy", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Ibuprofen in pregnancy causes fetal renal failure and premature ductus arteriosus closure. Metformin safety in pregnancy debated — both negations critical."
+    },
+    {
+      "id": "VN-16",
+      "language": "hi",
+      "specialty": "Hepatology",
+      "doctor_id": "DR-SINHA-16",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Liver cirrhosis patient, para sita mole dose reduce karo, I be proven bilkul mat do, Warfarin bhi nahi, PT INR check karo, LFT monitor karo, rifaximin start karo",
+      "ground_truth_transcript": "Liver cirrhosis patient, Paracetamol dose reduce karo, Ibuprofen bilkul mat do, Warfarin bhi nahi, PT-INR check karo, LFT monitor karo, Rifaximin start karo",
+      "plain_english": "Liver cirrhosis — reduce Paracetamol dose, ABSOLUTELY DO NOT give Ibuprofen, DO NOT give Warfarin, check PT-INR, monitor LFT, start Rifaximin",
+      "expected_nodes": [
+        {"type": "FACT", "title": "Liver cirrhosis — impaired drug metabolism", "importance": 0.95},
+        {"type": "DECISION", "title": "Reduce Paracetamol dose — hepatic impairment", "importance": 0.9},
+        {"type": "CONSTRAINT", "title": "DO NOT give Ibuprofen — hepatorenal syndrome risk", "importance": 1.0, "negation_trigger": "mat do"},
+        {"type": "CONSTRAINT", "title": "DO NOT give Warfarin — cirrhotic coagulopathy", "importance": 1.0, "negation_trigger": "nahi"},
+        {"type": "DECISION", "title": "Monitor PT-INR and LFT", "importance": 0.9},
+        {"type": "DECISION", "title": "Start Rifaximin — hepatic encephalopathy prevention", "importance": 0.9}
+      ],
+      "chatgpt_raw_simulation": "Cirrhosis. Paracetamol. Ibuprofen. Warfarin. LFT. Rifaximin.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Ibuprofen and Warfarin for cirrhosis", "importance": 0.6}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "NSAIDs in cirrhosis cause hepatorenal syndrome. Warfarin in cirrhosis + coagulopathy causes fatal bleeding."
+    },
+    {
+      "id": "VN-17",
+      "language": "ta",
+      "specialty": "Geriatrics",
+      "doctor_id": "DR-RAJAN-17",
+      "has_negation": false,
+      "danger_level": "SAFE",
+      "raw_asr_simulation": "80 varsha patient, polypharmacy review, al praz oh lam venda, gab a pen tin continue, donepezil start pannunga, fall risk assess pannunga, physiotherapy referral",
+      "ground_truth_transcript": "80 varsha patient, polypharmacy review, Alprazolam venda, Gabapentin continue, Donepezil start pannunga, fall risk assess pannunga, physiotherapy referral",
+      "plain_english": "80-year-old patient, polypharmacy review, discontinue Alprazolam (fall risk in elderly), continue Gabapentin, start Donepezil, assess fall risk, physiotherapy",
+      "expected_nodes": [
+        {"type": "FACT", "title": "80-year-old patient — geriatric care", "importance": 0.8},
+        {"type": "CONSTRAINT", "title": "Stop Alprazolam — Beers criteria, fall risk in elderly", "importance": 0.95, "negation_trigger": "venda"},
+        {"type": "DECISION", "title": "Continue Gabapentin for pain/neuropathy", "importance": 0.75},
+        {"type": "DECISION", "title": "Start Donepezil for cognitive decline", "importance": 0.85},
+        {"type": "DECISION", "title": "Fall risk assessment mandatory", "importance": 0.9},
+        {"type": "DECISION", "title": "Physiotherapy referral for elderly mobility", "importance": 0.7}
+      ],
+      "chatgpt_raw_simulation": "80 year patient. Alprazolam. Gabapentin. Al donepezil. Fall.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Continue Alprazolam", "importance": 0.6}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Alprazolam in elderly: Beers criteria — major fall, fracture, and cognitive decline risk. 'venda' (don't want/discontinue) missed."
+    },
+    {
+      "id": "VN-18",
+      "language": "kn",
+      "specialty": "Oncology",
+      "doctor_id": "DR-NATARAJ-18",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Chemotherapy patient, live vaccine kodabaradu, metro tracks eight toxicity monitor, CBC weekly check, granulocyte CSF ready irlisi, antiemetic start maadi",
+      "ground_truth_transcript": "Chemotherapy patient, live vaccine kodabaradu, Methotrexate toxicity monitor, CBC weekly check, Granulocyte CSF ready irlisi, antiemetic start maadi",
+      "plain_english": "Chemotherapy patient — DO NOT give live vaccines, monitor Methotrexate toxicity, weekly CBC, keep Granulocyte CSF ready, start antiemetic",
+      "expected_nodes": [
+        {"type": "CONSTRAINT", "title": "DO NOT give live vaccines — immunocompromised (chemo)", "importance": 1.0, "negation_trigger": "kodabaradu"},
+        {"type": "DECISION", "title": "Monitor Methotrexate toxicity parameters", "importance": 0.9},
+        {"type": "DECISION", "title": "Weekly CBC for bone marrow monitoring", "importance": 0.9},
+        {"type": "DECISION", "title": "Granulocyte CSF (G-CSF) on standby for neutropenia", "importance": 0.85},
+        {"type": "DECISION", "title": "Start antiemetics for chemotherapy-induced nausea", "importance": 0.8}
+      ],
+      "chatgpt_raw_simulation": "Chemo. Live vaccine. Metro tracks. CBC. Granulocyte. Antiemetic.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Give live vaccine", "importance": 0.6}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Live vaccine in immunocompromised patient causes vaccine-strain infection (fatal). Critical negation missed."
+    },
+    {
+      "id": "VN-19",
+      "language": "hi",
+      "specialty": "Cardiology",
+      "doctor_id": "DR-ARORA-19",
+      "has_negation": false,
+      "danger_level": "SAFE",
+      "raw_asr_simulation": "MI patient, E cosprin 75mg OD, clo pi let 75mg OD, atorva 40mg OD, met oh pro lol start karo, troponin check karo, ECG daily karo, bed rest karo",
+      "ground_truth_transcript": "MI patient, Ecosprin 75mg OD, Clopilet 75mg OD, Atorva 40mg OD, Metoprolol start karo, Troponin check karo, ECG daily karo, bed rest karo",
+      "plain_english": "MI patient — Aspirin 75mg OD, Clopidogrel 75mg OD, Atorvastatin 40mg OD, start Metoprolol, check Troponin, daily ECG, bed rest",
+      "expected_nodes": [
+        {"type": "FACT", "title": "Acute MI — DAPT initiated", "importance": 0.95},
+        {"type": "DECISION", "title": "Aspirin (Ecosprin) 75mg OD — antiplatelet", "importance": 0.95},
+        {"type": "DECISION", "title": "Clopidogrel (Clopilet) 75mg OD — dual antiplatelet", "importance": 0.95},
+        {"type": "DECISION", "title": "Atorvastatin 40mg OD — statin for MI", "importance": 0.9},
+        {"type": "DECISION", "title": "Start Metoprolol for heart rate control post-MI", "importance": 0.9},
+        {"type": "DECISION", "title": "Troponin monitoring and daily ECG", "importance": 0.85}
+      ],
+      "chatgpt_raw_simulation": "MI. E cosprin 75mg. Clo pi let. Atorva. Met oh pro lol. Troponin.",
+      "chatgpt_nodes_simulation": [
+        {"type": "FACT", "title": "MI patient", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": false,
+      "why_dangerous": "Brand names 'E cosprin', 'Clo pi let', 'Atorva', 'met oh pro lol' not recognised as Aspirin, Clopidogrel, Atorvastatin, Metoprolol"
+    },
+    {
+      "id": "VN-20",
+      "language": "mr",
+      "specialty": "Endocrinology",
+      "doctor_id": "DR-JOSHI-20",
+      "has_negation": true,
+      "danger_level": "CRITICAL",
+      "raw_asr_simulation": "Type 1 diabetes patient, insulin aspart band kara nako, thambav nako, lows frequent aahet, glucose monitor karo, carbohydrate count shikva, endocrinologist refer kara",
+      "ground_truth_transcript": "Type 1 diabetes patient, Insulin Aspart band kara nako, thambav nako, lows frequent aahet, glucose monitor karo, carbohydrate count shikva, endocrinologist refer kara",
+      "plain_english": "Type 1 diabetes patient — DO NOT stop Insulin Aspart, do NOT hold insulin, frequent hypoglycaemia occurring, monitor glucose, teach carb counting, refer to endocrinologist",
+      "expected_nodes": [
+        {"type": "CONSTRAINT", "title": "DO NOT stop Insulin Aspart — Type 1 DM, life-threatening", "importance": 1.0, "negation_trigger": "band kara nako"},
+        {"type": "CONSTRAINT", "title": "DO NOT hold insulin — Type 1 cannot survive without insulin", "importance": 1.0, "negation_trigger": "thambav nako"},
+        {"type": "FACT", "title": "Frequent hypoglycaemic episodes — dose adjustment needed", "importance": 0.9},
+        {"type": "DECISION", "title": "Continuous glucose monitoring", "importance": 0.85},
+        {"type": "DECISION", "title": "Carbohydrate counting education", "importance": 0.75},
+        {"type": "DECISION", "title": "Endocrinology referral for insulin optimisation", "importance": 0.85}
+      ],
+      "chatgpt_raw_simulation": "Type 1 DM. Insulin aspart stop. Glucose monitor. Carb count. Refer.",
+      "chatgpt_nodes_simulation": [
+        {"type": "DECISION", "title": "Stop Insulin Aspart", "importance": 0.7}
+      ],
+      "generic_ai_dangerous": true,
+      "why_dangerous": "Stopping insulin in Type 1 DM = diabetic ketoacidosis in hours (fatal). Double negation 'band kara nako' and 'thambav nako' both missed — catastrophic."
+    }
+  ]
+}
